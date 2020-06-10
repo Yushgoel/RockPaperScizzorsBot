@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+
+<html>
+	<head>
+		<title>Rock Paper Scizzors</title>
+		<style>
+			body {
+				background-color: #e1e5eb
+			}
+
+		</style>
+	</head>
+
+	<body background-color: #e1e5eb>
+
+		<center><h1>Computer VS You - Rock Paper Scizzors</h1></center>
+		<center><p style="color:black;font-size:18px;"><b>Can you beat it? </b></p></center>
+        <p id='game_id_tag'>{{game_id_api}}</p>
+        
+		<div style="margin-left:5em;margin-right: 5em">
+			<!--<button type="button" style="color:black;font-size:18px;margin-right:1em">Rock</button>
+            <button type="button" style="color:black;font-size:18px;margin-right:1em"> Paper</button>
+            <button type="button" style="color:black;font-size:18px;margin-right:1em">Scizzors</button> -->
+        <button type="button" style="color:black;font-size:14px;margin-right:1em" onclick="redirect()">Play</button>
+        
+        
+	</div>
+
+        <script>
+            
+            function redirect() 
+            {
+                var id = document.getElementById("game_id_tag").innerHTML
+                window.location.href = "https://rpsprogram.uc.r.appspot.com/" + id;
+            }
+                
+                
+
+            
+        
+        </script>
+	</body>
+</html>

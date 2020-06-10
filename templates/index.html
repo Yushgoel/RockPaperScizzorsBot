@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+
+<html>
+	<head>
+		<title>Rock Paper Scizzors</title>
+
+        <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+        <meta http-equiv="Pragma" content="no-cache" />
+        <meta http-equiv="Expires" content="0" />
+
+        <style>
+            button{
+                background-color: #2554c7;
+                font-family: serif;
+                font-size: 20px;
+                text-align: center;
+                border-radius: 12px;
+                color: white;
+                padding-top: 10px;
+                padding-bottom: 10px;
+                padding-left: 15px;
+                padding-right: 15px;
+                margin-right: 1em;
+            }
+            button:disabled
+            {
+                background-color: #cfcfcf;
+                font-family: serif;
+                font-size: 20px;
+                text-align: center;
+                border-radius: 12px;
+                color: white;
+                padding-top: 10px;
+                padding-bottom: 10px;
+                padding-left: 15px;
+                padding-right: 15px;
+                margin-right: 1em;
+            }
+            p1{
+                font-family: monospace;
+                font-size: 20px;
+            }
+        </style>
+	</head>
+
+	<body background-color: #e1e5eb>
+
+		<center><h1>Computer VS You - Rock Paper Scissors</h1></center>
+		<center><p style="color:black;font-size:22px;"><b>Can you beat it? </b></p></center>
+        <center><p style="color:black;font-size:20px;"> Please Enter Your Name: <input style="font-size:16px;" type="text" id="fname" name="fname"></p></center>
+        
+        <br>
+        <p style="color:black;font-size:16px;"> Game Session ID: </p> <p style="display: inline;" id='game_id_tag'> {{ game_id_api }} </p>
+        <br>
+		<div style="margin-left:5em;margin-right: 5em">
+			<!--<button type="button" style="color:black;font-size:18px;margin-right:1em">Rock</button>
+            <button type="button" style="color:black;font-size:18px;margin-right:1em"> Paper</button>
+            <button type="button" style="color:black;font-size:18px;margin-right:1em">Scizzors</button> -->
+        <center>
+            <img src="https://storage.googleapis.com/game_prob_data/rock.png" style='margin-right: 0px;'>
+            <img src="https://storage.googleapis.com/game_prob_data/paper.png" style='margin-right: 25px; margin-left: 9px;'>
+            <img src="https://storage.googleapis.com/game_prob_data/sciz.png" style='margin-right: 35px;'>
+            
+        </center>
+        <center>
+            <button id="Rocker" onclick="games('Rock')">Rock</button>
+            <button id='Paperer' onclick="games('Paper')">Paper</button>
+            <button id='Scizzorser' onclick="games('Scizzors')">Scissors</button>
+        </center>
+        
+        <br>
+        <br>
+        <table>
+        
+        <tr>
+            <td><p1>Last Round Result:    </p1></td>
+            <td><p style="color:black;font-size:20px;display: inline;" id='result'><i></i></p></td>
+        </tr>
+        <tr>
+            <td><p1> Player Win Count:    </p1></td>
+            <td><p style="color:black;font-size:20px;display: inline;" id='num_wins'><i></i></p></td>
+        </tr>
+        <tr>
+            <td><p1> Computer Win Count:  </p1> </td>
+            <td><p style="color:black;font-size:20px;display: inline;" id='num_loses'><i></i></p></td>
+        </tr>
+            <td><p1> Draw Count:          </p1></td>
+            <td> <p style="color:black;font-size:20px;display: inline;" id='num_draws'><i></i></p></td>
+        <tr>
+            
+        </tr>
+        </table>
+            
+        <!--    
+        <p1>Last Round Result:    </p1> <p style="color:black;font-size:20px;display: inline;" id='result'><i></i></p>
+        <br>
+        <br>
+        <p1> Player Win Count:    </p1>  <p style="color:black;font-size:20px;display: inline;" id='num_wins'><i></i></p>
+        <br>
+        <br>
+        <p1> Computer Win Count:  </p1> <p style="color:black;font-size:20px;display: inline;" id='num_loses'><i></i></p>
+        <br>
+        <br>
+        <p1> Draw Count:          </p1> <p style="color:black;font-size:20px;display: inline;" id='num_draws'><i></i></p> -->
+        
+	   </div>
+
+        <script>
+            var player_move = null;
+            
+            function games(move) 
+            {
+                var xhttp = new XMLHttpRequest();
+                xhttp.onreadystatechange = function() 
+                {
+
+                    if (this.responseText != null)//this.status=200)
+                    {
+                        var obj = JSON.parse(this.responseText);
+                        console.log("response text = " + this.responseText);   
+                        document.getElementById("result").innerHTML = obj.result;
+                        document.getElementById("num_wins").innerHTML = obj.wins;
+                        document.getElementById("num_loses").innerHTML = obj.loses;
+                        document.getElementById("num_draws").innerHTML = obj.draws;
+                        rock.disabled = false;
+                        paper.disabled = false;
+                        sciz.disabled = false;
+                
+                    }
+                }
+                
+                var id = document.getElementById("game_id_tag").innerHTML;
+                var name = document.getElementById("fname").value;
+                const rock = document.getElementById('Rocker');
+                const paper = document.getElementById('Paperer');
+                const sciz = document.getElementById('Scizzorser');
+                
+                if(name == "")
+                {
+                    window.alert("Please Enter your name");
+                    return;
+                }
+                // please work.asdf
+                // console.log('Move is ' + move + ' also id is ' + id);
+                rock.disabled = true;
+                paper.disabled = true;
+                sciz.disabled = true;
+                
+                xhttp.open('GET', "https://rpsprogram.uc.r.appspot.com/api?move=" + move + "&id=" + id + "&name=" + name, true); //https://jsonplaceholder.typicode.com/todos/1
+                xhttp.send();
+
+            }
+        
+        </script>
+	</body>
+</html>
